@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot con OpenAI</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #response { margin-top: 20px; background: #f1f1f1; padding: 10px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>🤖 Chatbot Demo</h1>
+  <form id="chatForm">
+    <label for="message">Escribe tu mensaje:</label><br>
+    <input type="text" id="message" name="message" required style="width: 300px;">
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div id="response"></div>
+
+  <script>
+    const form = document.getElementById('chatForm');
+    const responseDiv = document.getElementById('response');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = document.getElementById('message').value;
+
+      const res = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      });
+
+      const text = await res.text();
+      responseDiv.innerHTML = `<strong>Respuesta del chatbot:</strong><br>${text}`;
+    });
+  </script>
+</body>
+</html>
